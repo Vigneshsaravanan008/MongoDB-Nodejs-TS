@@ -1,0 +1,12 @@
+import type { Request, Response, NextFunction } from "express";
+
+export function errorHandler(error:any,req:Request,res:Response,next:NextFunction){
+    console.log(error);
+    res.status(500).json({message:error});
+} 
+
+export const asyncHandler = (fn: (req: Request, res: Response, next: NextFunction) => Promise<any>) => { //asynchandler accept the async fn that fn needs req,res,next, async return promise
+  return (req: Request, res: Response, next: NextFunction) => {
+    Promise.resolve(fn(req, res, next)).catch(next);
+  };
+};
