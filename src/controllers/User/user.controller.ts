@@ -1,7 +1,7 @@
-import express from 'express';
+import express, { Router } from 'express';
 import User from "../../models/User.js";
 
-const users = express.Router();
+const users:Router = express.Router();
 
 export const UserList =  users.get("/",async function(req:any,res:any,next:any){
     const Users=await User.find(); 
