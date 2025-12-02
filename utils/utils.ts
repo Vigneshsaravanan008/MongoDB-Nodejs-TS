@@ -1,9 +1,40 @@
+import jwt from "jsonwebtoken";
 import User from "../src/models/User.js";
+import dotenv from 'dotenv';
+const saltRounds = 10;
 
-async function tokenGenerator(userId:string){
-    const user=await User.findById(userId);
-    if(!user){
-        throw new Error("User not found");
+dotenv.config();
+const {JWT_SECRET,JWT_REAUTH_SECRET} =process.env;
+
+async function tokenGenerator(getUser:any){
+
+    const accessToken = jwt.sign(
+        {
+            _id:getUser._id,
+            name:getUser.name,
+            email:getUser.email
+        },
+        JWT_SECRET as string,
+        {
+        expiresIn: `1d`,
+        }
+    )
+
+    const refreshToken=jwt.sign(
+        {
+            _id:getUser._id,
+            name:getUser.name,
+            email:getUser.email
+        },
+        JWT_REAUTH_SECRET as string,
+        {
+        expiresIn: `1d`,
+        }
+    );
+
+    return {
+        accessToken:accessToken,
+        refreshToken:refreshToken
     }
 }
 

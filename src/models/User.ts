@@ -3,6 +3,7 @@ import mongoose,{Model} from "mongoose";
 interface User extends mongoose.Document {
   name: string;
   email:string,
+  password:string,
   image?:string,
   isDeleted?: boolean;
   deletedAt?: Date | null;
@@ -24,6 +25,10 @@ const UserSchema = new mongoose.Schema<User>(
       type: String,
       required: false,
       default:null
+    },
+    password:{
+      type:String,
+      required:true,
     },
     image: {
       type: String,

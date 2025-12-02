@@ -18,6 +18,7 @@ const ProductSchema= new mongoose.Schema<Product>(
         productCategoryId:{
             type:mongoose.Schema.Types.ObjectId,
             required:true,
+            ref: "ProductCategory",
         },
         slug:{
             type:String,
@@ -43,3 +44,5 @@ const ProductSchema= new mongoose.Schema<Product>(
 );
 
 const Product:Model<Product>=mongoose.models.Product || mongoose.model<Product>("Product",ProductSchema);
+
+export default Product;
